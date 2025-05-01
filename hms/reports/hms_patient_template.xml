@@ -1,0 +1,54 @@
+<odoo>
+    <template id="hms_patient_template">
+        <t t-call="web.external_layout">
+            <t t-foreach="docs" t-as="doc">
+                <div class="page" style="border:2px solid #0056b3; padding:20px;">
+                    <h1 style="color:#d9534f;">Patient Report</h1>
+                    <div style="display: flex; justify-content: space-between;">
+                        <div style="width: 65%;">
+                            <p><strong>Name:</strong> <t t-esc="doc.first_name"/> <t t-esc="doc.last_name"/></p>
+                            <p><strong>Age:</strong> <t t-esc="doc.age"/></p>
+                            <p><strong>Department:</strong> <t t-esc="doc.deparment_id.name"/></p>
+                           <p><strong>Doctors:</strong>
+                                <t t-foreach="doc.doctor_ids" t-as="doctor" t-foreach-index="idx">
+                                    <t t-esc="doctor.first_name"/>
+                                    <t t-if="doc.doctor_ids and idx is not None and idx + 1 != len(doc.doctor_ids)">, </t>
+                                </t>
+                            </p>
+
+
+
+                        </div>
+                        <div style="width: 30%; text-align:center;">
+                            <img t-if="doc.image" t-att-src="'data:image/png;base64,%s' % (doc.image)" style="max-width: 100px; max-height: 100px; border-radius: 10px;" alt="Patient Image"/>
+                            <p><strong>Birth date:</strong> <t t-esc="doc.birth_date"/></p>
+                            <p><strong>PCR:</strong> <t t-esc="doc.cr_ratio"/></p>
+                            <p><strong>Blood Type:</strong> <t t-esc="dict({'a':'A', 'b':'B', 'ab':'AB', 'o':'O'}).get(doc.blood_type)"/></p>
+                            <p><strong>Email:</strong> <t t-esc="doc.email"/></p>
+                        </div>
+                    </div>
+                    
+                    <h3 style="color:#d9534f; margin-top:30px;">Log History</h3>
+                    <table style="width: 100%; border-collapse: collapse;">
+                        <thead>
+                            <tr style="background-color: #007bff; color: white;">
+                                <th style="padding: 8px; border: 1px solid #ccc;">User</th>
+                                <th style="padding: 8px; border: 1px solid #ccc;">Date</th>
+                                <th style="padding: 8px; border: 1px solid #ccc;">Info</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <t t-foreach="doc.history_log" t-as="log">
+                                <tr style="background-color: #f2f2f2;">
+                                    <td style="padding: 8px; border: 1px solid #ccc;"><t t-esc="log.create_uid.name"/></td>
+                                    <td style="padding: 8px; border: 1px solid #ccc;"><t t-esc="log.create_date.strftime('%Y-%m-%d')"/></td>
+                                    <td style="padding: 8px; border: 1px solid #ccc;"><t t-esc="log.description"/></td>
+                                </tr>
+                            </t>
+                        </tbody>
+                    </table>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

@@ -1,0 +1,88 @@
+<odoo>
+    <data>
+        <record id="hms_patient_tree_view" model="ir.ui.view">
+            <field name="name">hms.patient.tree.view</field>
+            <field name="model">hms.patient</field>
+            <field name="arch" type='xml'>
+                <tree>
+                    <field name="first_name"/>
+                    <field name="age" />
+                    <field name="state"/>
+                </tree>
+            </field>
+        </record>
+
+        <record id="hms_patient_view_form" model="ir.ui.view">
+            <field name="name">hms.patient.view.form</field>
+            <field name="model">hms.patient</field>
+            <field name="arch" type="xml">
+                <form string="">
+                    <sheet>
+                        <group>
+                            <group string = 'General Information'>
+                                <field name='first_name' required = '1'/>
+                                <field name="last_name" />
+                                <field name="email" />
+                                <field name='age'/>
+                                <field name='birth_date'/>
+                                <field name="address" />
+                                <field name="image" />
+                            </group>
+                            <group string="Medical information">
+                                <field name="blood_type" />
+                                <field name="pcr" />
+                                <field name="cr_ratio" />
+                                <field name="is_history_visible" invisible="1"/>
+                                <field name="history" invisible="not is_history_visible"/>
+                                <field name="state" />
+                            </group>
+                        </group>
+                        <notebook>
+                            <page string="Department information">
+                                <group>
+                                    <field name="deparment_id" domain = "[('is_opened', '=', True)]" />
+                                    <field name="department_capacity" />
+                                </group>
+                            </page>
+                            <page string="Doctors information"  groups="hms.hms_manager_group">
+                                <group>
+                                    <field name="doctor_ids" widget="many2many" invisible="not deparment_id" >
+                                        <tree>
+                                            <field name="first_name"/>
+                                            <field name="last_name"/>
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                            <page string="History Log">
+                                <group>
+                                    <field name="history_log">
+                                        <tree>
+                                            <field name="description" />
+                                            <field name="create_uid" />
+                                            <field name="create_date" />
+                                        </tree>
+                                    </field>
+                                </group>
+                            </page>
+                        </notebook>
+                    </sheet>
+                </form>
+            </field>
+        </record>
+        <record id="HMS_patients_action" model="ir.actions.act_window">
+            <field name="name">Patient</field>
+            <field name="res_model">hms.patient</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+        <menuitem
+            id="HMS_menu"
+            name="HMS"/>
+        <menuitem
+            id="HMS_patients_menu"
+            name="Patients"
+            parent="HMS_menu"
+            action="HMS_patients_action"
+            sequence="1"/>
+    </data>
+</odoo>

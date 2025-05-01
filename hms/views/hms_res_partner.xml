@@ -1,0 +1,25 @@
+<odoo>
+    <record id="view_partner_form_inherit_patient" model="ir.ui.view">
+        <field name="name">res.partner.form.inherit.patient</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_form"/> 
+        <field name="arch" type="xml">
+
+            <xpath expr="//page[@name='sales_purchases']/group[@name='container_row_2']/group[@name='misc']" position="inside">
+                <field name="related_patient_id"/>
+            </xpath>
+
+        </field>
+    </record>
+    <record id="view_partner_list_inherit_patient" model="ir.ui.view">
+        <field name="name">res.partner.tree.inherit.patient</field>
+        <field name="model">res.partner</field>
+        <field name="inherit_id" ref="base.view_partner_tree"/>
+        <field name="arch" type="xml">
+            <xpath expr="//tree" position="inside">
+                <field name="website"/>
+            </xpath>
+        </field>
+
+    </record>
+</odoo>

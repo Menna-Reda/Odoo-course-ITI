@@ -1,0 +1,17 @@
+<odoo>
+    <data>
+        <record id="hms_patients_report" model="ir.actions.report">
+            <field name="name">Patient Report</field>
+            <field name="model">hms.patient</field>
+            <field name="report_name">hms.hms_patient_template</field>
+            <field name="report_file">hms.hms_patient_template</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="print_report_name">'Patient Report'</field>
+        </record>
+        
+    
+    </data>
+    
+    
+
+</odoo>
